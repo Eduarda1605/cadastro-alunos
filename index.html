@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro de Alunos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Alunos</h1>
+    <form id="cadastroAluno" action="#" method="post" onsubmit="return validarFormulario()">
+        <div class="form-group">
+            <label for="nome">Nome completo:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required />
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="exemplo@dominio.com" required />
+        </div>
+        <div class="form-group">
+            <label for="dataNascimento">Data de nascimento:</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" required />
+        </div>
+        <div class="form-group">
+            <label for="curso">Curso:</label>
+            <select id="curso" name="curso" required>
+                <option value="" disabled selected>Selecione o curso</option>
+                <option value="informatica">Informática</option>
+                <option value="administracao">Administração</option>
+                <option value="enfermagem">Enfermagem</option>
+                <option value="direito">Direito</option>
+                <option value="engenharia">Engenharia</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" pattern="$$\d{2}$$ \d{4,5}-\d{4}" title="Formato: (XX) XXXXX-XXXX" required />
+        </div>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        function validarFormulario() {
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const dataNascimento = document.getElementById('dataNascimento').value;
+            const curso = document.getElementById('curso').value;
+            const telefone = document.getElementById('telefone').value.trim();
+
+            if (nome.length < 3) {
+                alert('Por favor, insira um nome válido com pelo menos 3 caracteres.');
+                return false;
+            }
+
+            // Validação simples de e-mail já feita pelo input type=email
+
+            if (!dataNascimento) {
+                alert('Por favor, selecione a data de nascimento.');
+                return false;
+            }
+
+            const hoje = new Date();
+            const dataNasc = new Date(dataNascimento);
+            if (dataNasc >= hoje) {
+                alert('A data de nascimento deve ser anterior à data atual.');
+                return false;
+            }
+
+            if (!curso) {
+                alert('Por favor, selecione um curso.');
+                return false;
+            }
+
+            const telefoneRegex = /$$\d{2}$$ \d{4,5}-\d{4}/;
+            if (!telefoneRegex.test(telefone)) {
+                alert('Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX.');
+                return false;
+            }
+
+            alert('Aluno cadastrado com sucesso!');
+            // Aqui você pode enviar o formulário para o servidor ou processar os dados conforme necessário
+            return true;
+        }
+    </script>
+</body>
+</html>
